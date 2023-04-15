@@ -1,8 +1,34 @@
-import { useState } from "react"
-import InputLabel from '@mui/material/InputLabel';
+/* eslint-disable react/jsx-key */
+import { useEffect, useState } from "react"
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { Box } from "@mui/material";
+
+
+const period = [
+    {
+        id: 1,
+        name: "Year",
+        value: 1
+    },
+    {
+        id: 2,
+        name: "Monthly",
+        value: 12
+    },
+    {
+        id: 3,
+        name: "Weekly",
+        value: 52
+    },
+    {
+        id: 4,
+        name: "Days",
+        value: 365
+    },
+
+]
 
 const Calculator = () => {
 
@@ -11,10 +37,11 @@ const Calculator = () => {
         rate: '',
         duration: ''
     })
-    const [age, setAge] = useState('');
+    const [checkDuration, setCheckDuration] = useState(1);
+    const [labelName, setLabelName] = useState('')
 
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setCheckDuration(event.target.value);
     };
 
     const handleInputChange = (event) => {
@@ -26,16 +53,14 @@ const Calculator = () => {
     };
 
 
-    // const handleSubmit =(e)=>{
-    //     e.preventDefault()
-    //     console.log("formValue", formValue)
-    // }
+    useEffect(() => {
+        setLabelName(period.find(s => s.value === checkDuration)?.name)
 
+    }, [checkDuration])
 
     return (
-        <div style={{ textAlign: "center", marginTop: "2rem" }} >
+        <div style={{ textAlign: "center"}} >
             <form
-            //  onSubmit={handleSubmit}
             >
                 <div>
                     <label>Principle Amount</label> <input type='number' name="amount" value={formValue.amount} onChange={handleInputChange} />
@@ -43,33 +68,29 @@ const Calculator = () => {
                 <div>
                     <label>Rate of Interest (%)</label> <input type='number' value={formValue.rate} name="rate" onChange={handleInputChange} />
                 </div>
-                <div>
-                <label> Period Unit </label>
-                    <FormControl >
-                        <InputLabel id="demo-simple-select-label">duration</InputLabel>
+                <Box py={2} sx={{ minWidth: 120 }} >
+                    <label> Period Unit </label>
+                    <FormControl size="small" >
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={age}
-                            label="Age"
+                            value={checkDuration}
                             onChange={handleChange}
                         >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+                            {period?.map((item, index) => (
+                                <MenuItem key={index} value={item?.value}>{item?.name}</MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
-                </div>
+                </Box>
                 <div>
-                    <label>Number of year</label> <input type='number' value={formValue.duration} name="duration" onChange={handleInputChange} />
+                    <label>Number of {labelName} </label> <input type='number' value={formValue.duration} name="duration" onChange={handleInputChange} />
                 </div>
-                {/* <button type='submit'  >Submit</button> */}
             </form>
-
             <div>
-                <h4>Interest Earned ₹ {formValue.amount * (1 + formValue.rate / 100 * formValue.duration) - formValue.amount}</h4>
+                <h4>Interest Earned ₹ {formValue.amount * (1 + formValue.rate / 100 * formValue.duration / checkDuration) - formValue.amount}</h4>
                 <h4>Principal Amount ₹ {formValue.amount ? formValue.amount : 0}</h4>
-                <h4>Total Value ₹ {formValue.amount * (1 + formValue.rate / 100 * formValue.duration)}</h4>
+                <h4>Total Value ₹ {formValue.amount * (1 + formValue.rate / 100 * formValue.duration / checkDuration)}</h4>
             </div>
         </div>
     )
