@@ -24,7 +24,7 @@ const DashboardComponent = () => {
       >
         {value === index && (
           <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
+              {children}
           </Box>
         )}
       </div>
@@ -50,6 +50,7 @@ const DashboardComponent = () => {
       </TabPanel>
       <TabPanel value={value} index={1}>
         {/* <RecordTable /> */}
+         <Typography>Lender Records</Typography>
       </TabPanel>
     </div>
   )
