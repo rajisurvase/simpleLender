@@ -3,7 +3,6 @@ import React from 'react'
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
 import Calculator from './Calculator';
-import TableHead from './RecordTable/TableHead';
 const DashboardComponent = () => {
   const [value, setValue] = useState(0);
 
