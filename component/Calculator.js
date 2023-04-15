@@ -44,9 +44,9 @@ const Calculator = () => {
                     <label>Rate of Interest (%)</label> <input type='number' value={formValue.rate} name="rate" onChange={handleInputChange} />
                 </div>
                 <div>
-                <label>  </label>
+                <label> Period Unit </label>
                     <FormControl >
-                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                        <InputLabel id="demo-simple-select-label">duration</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
